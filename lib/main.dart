@@ -24,7 +24,8 @@ class MainApp extends StatelessWidget {
             create: (context) => FeaturedBooksCubit(getIt.get<HomeRepoImpl>())
               ..fetchFeaturedBooks()),
         BlocProvider(
-            create: (context) => NewsedBooksCubit(getIt.get<HomeRepoImpl>())),
+            create: (context) => NewsedBooksCubit(getIt.get<HomeRepoImpl>())
+              ..fetchNewsetBooks()),
       ],
       child: MaterialApp.router(
         routerConfig: AppRouter.router,
