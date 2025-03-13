@@ -10,31 +10,29 @@ class BestSellerListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: BlocBuilder<NewsedBooksCubit, NewsetBooksState>(
-        builder: (context, state) {
-          if (state is NewsetBooksSuccess) {
-            return ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.zero,
-              itemCount: state.books.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: BookListViewItem(
-                    bookModel: state.books[index],
-                  ),
-                );
-              },
-            );
-          } else if (state is NewsetBooksFailure) {
-            return CustomErrorWidget(errMessage: state.errMessage);
-          } else {
-            return const CustomLoadingIndector();
-          }
-        },
-      ),
+    return BlocBuilder<NewsedBooksCubit, NewsetBooksState>(
+      builder: (context, state) {
+        if (state is NewsetBooksSuccess) {
+          return ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.zero,
+            itemCount: state.books.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: BookListViewItem(
+                  bookModel: state.books[index],
+                ),
+              );
+            },
+          );
+        } else if (state is NewsetBooksFailure) {
+          return CustomErrorWidget(errMessage: state.errMessage);
+        } else {
+          return const CustomLoadingIndector();
+        }
+      },
     );
   }
 }

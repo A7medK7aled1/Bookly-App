@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 
 import 'package:bookly_app/core/errors/fauilers.dart';
@@ -17,11 +19,15 @@ class HomeRepoImpl implements HomeRepo {
   Future<Either<Fauilers, List<BookModel>>> fetchBestSellerBooks() async {
     try {
       var data = await apiServes.get(
-          endPoint: 'volumes?Filtering=free-ebooks&q=subject:programming');
+          endPoint: 'volumes?Filtering=free-ebooks&q=subject:computer science');
 
       List<BookModel> books = [];
       for (var item in data['items']) {
-        books.add(BookModel.fromJson(item));
+        try {
+          books.add(BookModel.fromJson(item));
+        } catch (e) {
+          log(e.toString());
+        }
       }
       return Right(books);
     } catch (e) {
